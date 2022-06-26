@@ -8,6 +8,8 @@ namespace Core
         public float Health => _health;
         public float MaxHealth => _maxHealth;
         public Sprite Icon => _icon;
+        public float ViewSelectSize => 35f;
+        public GameObject GameObject => gameObject;
 
         [SerializeField] private GameObject _unitPrefab;
         [SerializeField] private Transform _unitsParent;
@@ -16,6 +18,8 @@ namespace Core
         [SerializeField] private Sprite _icon;
 
         private float _health = 1000;
+
+        private float viewSelectSize = 35f;
 
         public void ProduceUnit()
         {
