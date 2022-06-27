@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Core
 {
-    public sealed class MainBuilding : CommandExecutorBase<IProduceUnitCommand>, IUnitProducer, ISelectable
+    public sealed class UnitChomper : CommandExecutorBase<IProduceUnitCommand>, IUnitProducer, ISelectable
     {
         public float Health => _health;
         public float MaxHealth => _maxHealth;
