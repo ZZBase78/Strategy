@@ -54,7 +54,8 @@ namespace UserControlSystem.UI.Presenter
 
             if (commandExecutor is CommandExecutorBase<IProduceUnitCommand> unitProducer)
             {
-                unitProducer.ExecuteSpecificCommand(_context.Inject(new ProduceUnitCommand()));
+                //unitProducer.ExecuteSpecificCommand(_context.Inject(new ProduceUnitCommand()));
+                unitProducer.ExecuteSpecificCommand(_context.Inject(new ProduceUnitCommandHeir()));
                 return;
             }
             else if (commandExecutor != null)
