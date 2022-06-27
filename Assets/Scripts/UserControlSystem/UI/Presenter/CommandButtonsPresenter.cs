@@ -45,12 +45,24 @@ namespace UserControlSystem.UI.Presenter
 
         private void ONButtonClick(ICommandExecutor commandExecutor)
         {
-            var unitProducer = commandExecutor as CommandExecutorBase<IProduceUnitCommand>;
-            if (unitProducer != null)
+            //var unitProducer = commandExecutor as CommandExecutorBase<IProduceUnitCommand>;
+            //if (unitProducer != null)
+            //{
+            //    unitProducer.ExecuteSpecificCommand(_context.Inject(new ProduceUnitCommand()));
+            //    return;
+            //}
+
+            if (commandExecutor is CommandExecutorBase<IProduceUnitCommand> unitProducer)
             {
                 unitProducer.ExecuteSpecificCommand(_context.Inject(new ProduceUnitCommand()));
                 return;
             }
+            else if (commandExecutor != null)
+            {
+                commandExecutor.ExecuteCommand(null);
+                return;
+            }
+
             throw new ApplicationException($"{nameof(CommandButtonsPresenter)}.{nameof(ONButtonClick)}: " +
                                            $"Unknown type of commands executor: {commandExecutor.GetType().FullName}!");
         }

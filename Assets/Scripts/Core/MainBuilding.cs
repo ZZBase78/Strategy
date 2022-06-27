@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Core
 {
-    public sealed class MainBuilding : CommandExecutorBase<IProduceUnitCommand>, IUnitProducer, ISelectable
+    public sealed class MainBuilding : CommandExecutorBase<IProduceUnitCommand>, ISelectable
     {
         public float Health => _health;
         public float MaxHealth => _maxHealth;
@@ -31,7 +31,7 @@ namespace Core
 
         public override void ExecuteSpecificCommand(IProduceUnitCommand command)
         {
-            if (command is IProduceUnitCommand) ProduceUnit();
+            ProduceUnit();
         }
     }
 }
