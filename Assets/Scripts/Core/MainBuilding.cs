@@ -21,17 +21,8 @@ namespace Core
 
         private float _health = 1000;
 
-        public void ProduceUnit()
-        {
-            Instantiate(_unitPrefab,
-                new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)),
-                Quaternion.identity,
-                _unitsParent);
-        }
-
         public override void ExecuteSpecificCommand(IProduceUnitCommand command)
         {
-            //ProduceUnit();
             Instantiate(command.UnitPrefab,
                 new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)),
                 Quaternion.identity,
