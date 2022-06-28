@@ -1,9 +1,11 @@
 using Abstractions;
+using Abstractions.Commands;
+using Abstractions.Commands.CommandsInterfaces;
 using UnityEngine;
 
 namespace Core
 {
-    public sealed class MainBuilding : MonoBehaviour, IUnitProducer, ISelectable
+    public sealed class MainBuilding : CommandExecutorBase<IProduceUnitCommand>, ISelectable
     {
         public float Health => _health;
         public float MaxHealth => _maxHealth;
@@ -19,11 +21,9 @@ namespace Core
 
         private float _health = 1000;
 
-        private float viewSelectSize = 35f;
-
-        public void ProduceUnit()
+        public override void ExecuteSpecificCommand(IProduceUnitCommand command)
         {
-            Instantiate(_unitPrefab,
+            Instantiate(command.UnitPrefab,
                 new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)),
                 Quaternion.identity,
                 _unitsParent);

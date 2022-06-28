@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e01563d37a23f4e9bae517fb3e14dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitPrefab: {fileID: 100002, guid: 2732fe64dd2799f439fb845921df626b, type: 3}
+  _unitPrefab: {fileID: 2817489949999810628, guid: 44ed722a641900d49b064b06a2cc3fae, type: 3}
   _unitsParent: {fileID: 0}
   _maxHealth: 1000
   _icon: {fileID: 21300000, guid: bdf63f5a1f477524896e9d4f871f4c5f, type: 3}
