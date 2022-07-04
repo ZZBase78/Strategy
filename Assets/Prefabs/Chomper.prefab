@@ -1972,6 +1972,8 @@ GameObject:
   - component: {fileID: 2776512781921497608}
   - component: {fileID: 5602326224976603386}
   - component: {fileID: 920765487932839863}
+  - component: {fileID: 5018740845975843947}
+  - component: {fileID: 4328585988128294532}
   m_Layer: 0
   m_Name: Chomper
   m_TagString: Untagged
@@ -2006,7 +2008,7 @@ Animator:
   m_GameObject: {fileID: 6116066217487538448}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 2732fe64dd2799f439fb845921df626b, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2bc84b452a645d04a8d91fe675c3c2f1, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -2029,6 +2031,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _icon: {fileID: 21300000, guid: 9908913e928c42d4f9f1891893bbc424, type: 3}
+  _pivotPoint: {fileID: 6116066217487435056}
 --- !u!114 &2788052498458739929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2055,6 +2058,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7199fb880eb4449a447d552b42276e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stop: {fileID: 4328585988128294532}
+  _animator: {fileID: 6116066217494964946}
 --- !u!114 &2776512781921497608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2091,6 +2096,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 754705766f7d49ab8e046b76a7b3fed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!195 &5018740845975843947
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6116066217487538448}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &4328585988128294532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6116066217487538448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdef129bd80447e8896bf173a057959b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _agent: {fileID: 5018740845975843947}
 --- !u!1 &6116066217487538450
 GameObject:
   m_ObjectHideFlags: 0

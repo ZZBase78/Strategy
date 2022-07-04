@@ -1,9 +1,15 @@
+using System;
 using System.Threading.Tasks;
 using Assets.GeekBrains;
 using UnityEngine;
 
 public class AsyncSyntax : MonoBehaviour
 {
+    private void Start()
+    {
+        RunTest();
+    }
+
     public void RunTest() => RunAsync();
 
     private async void RunAsync()
