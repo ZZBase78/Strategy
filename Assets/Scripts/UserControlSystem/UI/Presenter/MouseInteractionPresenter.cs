@@ -1,8 +1,13 @@
 ﻿using System.Linq;
 using Abstractions;
+using Abstractions.Commands;
+using Abstractions.Commands.CommandsInterfaces;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UserControlSystem;
+using UserControlSystem.CommandsRealization;
+using UserControlSystem.UI.Presenter;
+using Zenject;
 
 public sealed class MouseInteractionPresenter : MonoBehaviour
 {
@@ -13,14 +18,22 @@ public sealed class MouseInteractionPresenter : MonoBehaviour
     [SerializeField] private Vector3Value _groundClicksRMB;
     [SerializeField] private AttackableValue _attackablesRMB;
     [SerializeField] private Transform _groundTransform;
-    
+
+    private AutoCommand _autoCommand;
     private Plane _groundPlane;
-    
+    private CommandButtonsPresenter _commandButtonsPresenter;
+
+    private void Awake()
+    {
+        _autoCommand = new AutoCommand();
+        _commandButtonsPresenter = FindObjectOfType<CommandButtonsPresenter>();
+    }
+
     private void Start() => _groundPlane = new Plane(_groundTransform.up, 0);
 
     private void Update()
     {
-        if (!Input.GetMouseButtonUp(0) && !Input.GetMouseButton(1))
+        if (!Input.GetMouseButtonUp(0) && !Input.GetMouseButtonDown(1))
         {
             return;
         }
@@ -47,11 +60,21 @@ public sealed class MouseInteractionPresenter : MonoBehaviour
         {
             if (WeHit<IAttackable>(hits, out var attackable))
             {
-                _attackablesRMB.SetValue(attackable);
+                if (!_autoCommand.AutoAttackUnit(_selectedObject.CurrentValue, attackable))
+                    _attackablesRMB.SetValue(attackable);
             }
             else if (_groundPlane.Raycast(ray, out var enter))
             {
-                _groundClicksRMB.SetValue(ray.origin + ray.direction * enter);
+                Vector3 newValue = ray.origin + ray.direction * enter;
+                if (_commandButtonsPresenter != null && _commandButtonsPresenter.CommandIsPending)
+                {
+                    _groundClicksRMB.SetValue(newValue);
+                }
+                else if (!_autoCommand.AutoMoveUnit(_selectedObject.CurrentValue, newValue))
+                {
+                    _groundClicksRMB.SetValue(newValue);
+                }
+                    
             }
         }
     }
