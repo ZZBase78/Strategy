@@ -17,7 +17,8 @@ namespace UserControlSystem.UI.Presenter
         [SerializeField] private CommandButtonsView _view;
         [Inject] private CommandButtonsModel _model;
         private ISelectable _currentSelectable;
-        
+        public bool CommandIsPending => _model.CommandIsPending;
+
         private void Start()
         {
             _view.OnClick += _model.OnCommandButtonClicked;
@@ -28,6 +29,7 @@ namespace UserControlSystem.UI.Presenter
             _selectable.OnNewValue += ONSelected;
             ONSelected(_selectable.CurrentValue);
         }
+
 
         private void ONSelected(ISelectable selectable)
         {
