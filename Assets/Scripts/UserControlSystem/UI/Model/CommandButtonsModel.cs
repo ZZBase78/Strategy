@@ -18,7 +18,6 @@ namespace UserControlSystem
         [Inject] private CommandCreatorBase<IPatrolCommand> _patroller;
 
         private bool _commandIsPending;
-        public bool CommandIsPending => _commandIsPending;
 
         public void OnCommandButtonClicked(ICommandExecutor commandExecutor)
         {
