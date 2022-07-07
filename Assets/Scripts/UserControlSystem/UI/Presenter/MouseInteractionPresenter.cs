@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Abstractions;
+using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UserControlSystem;
@@ -16,20 +17,16 @@ public sealed class MouseInteractionPresenter : MonoBehaviour
     
     private Plane _groundPlane;
     
-    private void Start() => _groundPlane = new Plane(_groundTransform.up, 0);
-
-    private void Update()
+    private void Start()
     {
-        if (!Input.GetMouseButtonUp(0) && !Input.GetMouseButton(1))
-        {
-            return;
-        }
-        
-        if (_eventSystem.IsPointerOverGameObject())
-        {
-            return;
-        }
-        
+        _groundPlane = new Plane(_groundTransform.up, 0);
+
+        var clickStream = Observable.EveryUpdate().Where(_ => (Input.GetMouseButtonUp(0) || Input.GetMouseButton(1)) && (!_eventSystem.IsPointerOverGameObject()));
+        clickStream.Subscribe(EveryUpdate);
+    }
+
+    private void EveryUpdate(long frameCount)
+    {
         var ray = _camera.ScreenPointToRay(Input.mousePosition);
         var hits = Physics.RaycastAll(ray);
         if (Input.GetMouseButtonUp(0))
