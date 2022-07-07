@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Abstractions.Commands;
 using Abstractions.Commands.CommandsInterfaces;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,9 +20,12 @@ namespace UserControlSystem.UI.View
         [SerializeField] private GameObject _produceUnitButton;
 
         private Dictionary<Type, GameObject> _buttonsByExecutorType;
+        private List<IDisposable> buttonObservables;
 
         private void Start()
         {
+            buttonObservables = new List<IDisposable>();
+
             _buttonsByExecutorType = new Dictionary<Type, GameObject>();
             _buttonsByExecutorType
                 .Add(typeof(CommandExecutorBase<IAttackCommand>), _attackButton);
@@ -59,7 +63,9 @@ namespace UserControlSystem.UI.View
                 var buttonGameObject = GETButtonGameObjectByType(currentExecutor.GetType());
                 buttonGameObject.SetActive(true);
                 var button = buttonGameObject.GetComponent<Button>();
-                button.onClick.AddListener(() => OnClick?.Invoke(currentExecutor));
+
+                var buttonObservable = button.OnClickAsObservable().Subscribe(_ => OnClick?.Invoke(currentExecutor));
+                buttonObservables.Add(buttonObservable);
             }
         }
 
@@ -78,6 +84,12 @@ namespace UserControlSystem.UI.View
                     .GetComponent<Button>().onClick.RemoveAllListeners();
                 kvp.Value.SetActive(false);
             }
+
+            foreach (var button_observable in buttonObservables)
+            {
+                button_observable.Dispose();
+            }
+            buttonObservables.Clear();
         }
     }
 }
