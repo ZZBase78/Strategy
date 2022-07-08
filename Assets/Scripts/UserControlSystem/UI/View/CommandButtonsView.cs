@@ -11,8 +11,6 @@ namespace UserControlSystem.UI.View
 {
     public sealed class CommandButtonsView : MonoBehaviour
     {
-        public Action<ICommandExecutor> OnClick;
-
         [SerializeField] private GameObject _attackButton;
         [SerializeField] private GameObject _moveButton;
         [SerializeField] private GameObject _patrolButton;
@@ -64,7 +62,7 @@ namespace UserControlSystem.UI.View
                 buttonGameObject.SetActive(true);
                 var button = buttonGameObject.GetComponent<Button>();
 
-                var buttonObservable = button.OnClickAsObservable().Subscribe(_ => OnClick?.Invoke(currentExecutor));
+                var buttonObservable = button.OnClickAsObservable().Subscribe(_ => MessageBroker.Default.Publish(currentExecutor));
                 buttonObservables.Add(buttonObservable);
             }
         }
