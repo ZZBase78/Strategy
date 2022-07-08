@@ -18,5 +18,6 @@ public sealed class AssetsInstaller : ScriptableObjectInstaller<AssetsInstaller>
         Container.Bind<IAwaitable<Vector3>>()
             .FromInstance(_groundClicksRMB);
         Container.BindInstances(_legacyContext, _selectables);
+
     }
 }

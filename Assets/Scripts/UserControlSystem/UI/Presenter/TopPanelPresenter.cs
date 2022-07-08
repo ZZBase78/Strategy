@@ -12,6 +12,8 @@ public sealed class TopPanelPresenter : MonoBehaviour
     [SerializeField] private Button _menuButton;
     [SerializeField] private GameObject _menuGo;
 
+    [Inject] private PauseModel _pauseModel;
+
     [Inject]
     private void Init(ITimeModel timeModel)
     {
@@ -21,6 +23,12 @@ public sealed class TopPanelPresenter : MonoBehaviour
             _inputField.text = $"{t.Minutes:D2}:{t.Seconds:D2}";
         });
 
-        _menuButton.OnClickAsObservable().Subscribe(_ => _menuGo.SetActive(true));
+        _menuButton.OnClickAsObservable().Subscribe(_ => MenuGo());
+    }
+
+    private void MenuGo()
+    {
+        _menuGo.SetActive(true);
+        _pauseModel.SetPause(true);
     }
 }

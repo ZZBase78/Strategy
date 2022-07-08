@@ -1,16 +1,12 @@
-﻿using System;
-using Abstractions.Commands;
+﻿using Abstractions.Commands;
 using Abstractions.Commands.CommandsInterfaces;
+using UniRx;
 using Zenject;
 
 namespace UserControlSystem
 {
     public sealed class CommandButtonsModel
     {
-        public event Action<ICommandExecutor> OnCommandAccepted;
-        public event Action OnCommandSent;
-        public event Action OnCommandCancel;
-
         [Inject] private CommandCreatorBase<IProduceUnitCommand> _unitProducer;
         [Inject] private CommandCreatorBase<IAttackCommand> _attacker;
         [Inject] private CommandCreatorBase<IStopCommand> _stopper;
@@ -26,7 +22,7 @@ namespace UserControlSystem
                 processOnCancel();
             }
             _commandIsPending = true;
-            OnCommandAccepted?.Invoke(commandExecutor);
+            MessageBroker.Default.Publish(new ModelOnCommandAccepted(commandExecutor));
 
             _unitProducer.ProcessCommandExecutor(commandExecutor, command => ExecuteCommandWrapper(commandExecutor, command));
             _attacker.ProcessCommandExecutor(commandExecutor, command => ExecuteCommandWrapper(commandExecutor, command));
@@ -39,7 +35,7 @@ namespace UserControlSystem
         {
             commandExecutor.ExecuteCommand(command);
             _commandIsPending = false;
-            OnCommandSent?.Invoke();
+            MessageBroker.Default.Publish(new ModelOnCommandSent());
         }
 
         public void OnSelectionChanged()
@@ -56,7 +52,7 @@ namespace UserControlSystem
             _mover.ProcessCancel();
             _patroller.ProcessCancel();
 
-            OnCommandCancel?.Invoke();
+            MessageBroker.Default.Publish(new ModelOnCommandCancel());
         }
     }
 }
