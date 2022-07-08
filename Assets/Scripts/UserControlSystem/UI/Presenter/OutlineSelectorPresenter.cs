@@ -1,6 +1,7 @@
 using Abstractions;
 using UnityEngine;
 using UserControlSystem;
+using UniRx;
 
 public class OutlineSelectorPresenter : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class OutlineSelectorPresenter : MonoBehaviour
 
     private void Start()
     {
-        _selectableValue.OnNewValue += OnSelected;
+        _selectableValue.ReactiveValue.Subscribe(selectable => OnSelected(selectable));
     }
 
     private void OnSelected(ISelectable selectable)

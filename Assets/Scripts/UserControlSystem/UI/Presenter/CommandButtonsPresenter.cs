@@ -22,7 +22,7 @@ namespace UserControlSystem.UI.Presenter
             MessageBroker.Default.Receive<ModelOnCommandCancel>().Subscribe(_ => _view.UnblockAllInteractions());
             MessageBroker.Default.Receive<ModelOnCommandAccepted>().Subscribe(command => _view.BlockInteractions(command.commandExecutor));
 
-            _selectable.OnNewValue += ONSelected;
+            _selectable.ReactiveValue.Subscribe(selectable => ONSelected(selectable));
             ONSelected(_selectable.CurrentValue);
 
         }
