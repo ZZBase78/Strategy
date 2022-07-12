@@ -29,8 +29,17 @@ namespace Core.CommandExecutors
             if (innerTask.TimeLeft <= 0)
             {
                 removeTaskAtIndex(0);
-                Instantiate(innerTask.UnitPrefab, new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)), Quaternion.identity, _unitsParent);
+                var go = Instantiate(innerTask.UnitPrefab, new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)), Quaternion.identity, _unitsParent);
+                ExecuteCommandToWayPoint(go);
             }
+        }
+
+        void ExecuteCommandToWayPoint(GameObject go)
+        {
+            IWayPointHolder wayPointHolder = GetComponentInChildren<IWayPointHolder>();
+
+            if (wayPointHolder != null)
+                wayPointHolder.SentUnitToWayPoint(go);
         }
 
         public void Cancel(int index) => removeTaskAtIndex(index);
