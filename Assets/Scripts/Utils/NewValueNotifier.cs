@@ -1,6 +1,4 @@
-﻿using Utils;
-
-namespace UserControlSystem
+﻿namespace Utils
 {
     public class NewValueNotifier<TAwaited> : AwaiterBase<TAwaited>
     {
