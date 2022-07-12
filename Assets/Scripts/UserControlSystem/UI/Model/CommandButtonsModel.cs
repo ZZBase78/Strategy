@@ -17,6 +17,8 @@ namespace UserControlSystem
         [Inject] private CommandCreatorBase<IMoveCommand> _mover;
         [Inject] private CommandCreatorBase<IPatrolCommand> _patroller;
 
+        [Inject] private ShiftModificatorModel _shiftModificatorModel;
+
         private bool _commandIsPending;
 
         public void OnCommandButtonClicked(ICommandExecutor commandExecutor)
@@ -37,7 +39,22 @@ namespace UserControlSystem
 
         public void ExecuteCommandWrapper(ICommandExecutor commandExecutor, object command)
         {
-            commandExecutor.ExecuteCommand(command);
+            if (_shiftModificatorModel.IsShift)
+            {
+                if (!commandExecutor.AppendCommand(command))
+                {
+                    commandExecutor.ExecuteCommand(command);
+                }
+            }
+            else
+            {
+                commandExecutor.ResetQueue();
+                if (!commandExecutor.AppendCommand(command))
+                {
+                    commandExecutor.ExecuteCommand(command);
+                }
+            }
+
             _commandIsPending = false;
             OnCommandSent?.Invoke();
         }
