@@ -72,22 +72,25 @@ namespace Core.CommandExecutors
         
         public override async Task ExecuteSpecificCommand(IAttackCommand command)
         {
-            _targetTransform = (command.Target as Component).transform;
-            _currentAttackOp = new AttackOperation(this, command.Target);
-            Update();
-            _stopCommandExecutor.CancellationTokenSource = new CancellationTokenSource();
-            try
+            if (command.Target != null)
             {
-                await _currentAttackOp.WithCancellation(_stopCommandExecutor.CancellationTokenSource.Token);
+                _targetTransform = (command.Target as Component)?.transform;
+                _currentAttackOp = new AttackOperation(this, command.Target);
+                Update();
+                _stopCommandExecutor.CancellationTokenSource = new CancellationTokenSource();
+                try
+                {
+                    await _currentAttackOp.WithCancellation(_stopCommandExecutor.CancellationTokenSource.Token);
+                }
+                catch
+                {
+                    _currentAttackOp.Cancel();
+                }
+                _animator.SetTrigger("Idle");
+                _currentAttackOp = null;
+                _targetTransform = null;
+                _stopCommandExecutor.CancellationTokenSource = null;
             }
-            catch
-            {
-                _currentAttackOp.Cancel();
-            }
-            _animator.SetTrigger("Idle");
-            _currentAttackOp = null;
-            _targetTransform = null;
-            _stopCommandExecutor.CancellationTokenSource = null;
         }
         
         private void Update()
