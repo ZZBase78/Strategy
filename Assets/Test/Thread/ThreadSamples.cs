@@ -13,7 +13,7 @@ public class ThreadSamples : MonoBehaviour
          //public bool Flag;
         public volatile bool Flag;
 
-        public volatile float Value = 0;
+        public float Value = 0;
     }
 
     private TestVolatile _testVolatile = new TestVolatile();
@@ -29,28 +29,25 @@ public class ThreadSamples : MonoBehaviour
     private void StartVolatile1(object obj)
     {
         // TODO Wrong!
-        _testVolatile.Flag = true;
-        _testVolatile.Value = 5;
+        // _testVolatile.Flag = true;
+        // _testVolatile.Value = 5;
 
-        //Volatile.Write(ref _testVolatile.Flag, true);
+        //Volatile.Write(ref _test.Flag, true);
 
-        // //TODO Right
-        // for (int i = 0; i < 1000; i++)
-        // {
-        //     _testVolatile.Value = CalculatePerlinNoise(i);
-        // }
+        //TODO Right
+        for (int i = 0; i < 1000; i++)
+        {
+            _testVolatile.Value = CalculatePerlinNoise(i);
+        }
     }
 
     private void StartVolatile2(object obj)
     {
         //Volatile.Read(ref _test.Flag);
-        if (_testVolatile.Flag)
-        {
-            Debug.Log($"Value {_testVolatile.Value}");
-        }
+        //if (_testVolatile.Flag)
         for (int i = 0; i < 1000; i++)
         {
-            
+            Debug.Log($"Value {_testVolatile.Value}");
         }
     }
 

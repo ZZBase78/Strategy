@@ -8,6 +8,8 @@ namespace Core
 {
     public sealed class ChomperCommandsQueue : MonoBehaviour, ICommandsQueue
     {
+        public ICommand CurrentCommand => _innerCollection.Count > 0 ? _innerCollection[0] : default;
+        
         [Inject] CommandExecutorBase<IMoveCommand> _moveCommandExecutor;
         [Inject] CommandExecutorBase<IPatrolCommand> _patrolCommandExecutor;
         [Inject] CommandExecutorBase<IAttackCommand> _attackCommandExecutor;

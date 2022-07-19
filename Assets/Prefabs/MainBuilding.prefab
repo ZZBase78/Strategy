@@ -62,6 +62,8 @@ GameObject:
   - component: {fileID: 6954222127870689144}
   - component: {fileID: 8137799564546166671}
   - component: {fileID: 6980761818655492905}
+  - component: {fileID: 8076035733206905134}
+  - component: {fileID: 2914233595384315852}
   m_Layer: 0
   m_Name: MainBuilding
   m_TagString: Untagged
@@ -175,6 +177,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 3976592523933251032}
+  - {fileID: 8076035733206905134}
   _installerPrefabs: []
   _autoRun: 1
   _kernel: {fileID: 0}
@@ -215,6 +218,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _factionId: 0
+--- !u!114 &8076035733206905134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8162635956236408473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3553d499951466e9dd0836c50ad85bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _factionMemberParallelInfoUpdater: {fileID: 2914233595384315852}
+--- !u!114 &2914233595384315852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8162635956236408473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6116cc8ca7834ad4b918800b9d1623ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8162635956236408475
 GameObject:
   m_ObjectHideFlags: 0

@@ -72,8 +72,6 @@ namespace Core.CommandExecutors
         
         public override async Task ExecuteSpecificCommand(IAttackCommand command)
         {
-            _stopCommandExecutor.CancellationTokenSource?.Cancel();
-            await Task.Yield();
             _targetTransform = (command.Target as Component).transform;
             _currentAttackOp = new AttackOperation(this, command.Target);
             Update();
@@ -99,7 +97,7 @@ namespace Core.CommandExecutors
                 return;
             }
 
-            //lock(this)
+            lock(this)
             {
                 _ourPosition = transform.position;
                 _ourRotation = transform.rotation;
@@ -171,7 +169,7 @@ namespace Core.CommandExecutors
             			var targetPosition = default(Vector3);
             			var ourPosition = default(Vector3);
             			var ourRotation = default(Quaternion);
-            			//lock (_attackCommandExecutor)
+            			lock (_attackCommandExecutor)
             			{
                 			targetPosition = _attackCommandExecutor._targetPosition;
                 			ourPosition = _attackCommandExecutor._ourPosition;
