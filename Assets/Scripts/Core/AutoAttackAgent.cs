@@ -19,8 +19,8 @@ namespace Core
 
         private void AutoAttack(GameObject target)
         {
-            _queue.Clear();
-            _queue.EnqueueCommand(new AutoAttackCommand(target.GetComponent<IAttackable>()));
+            //_queue.Clear();
+            //_queue.EnqueueCommand(new AutoAttackCommand(target.GetComponent<IAttackable>()));
         }
     }
 }

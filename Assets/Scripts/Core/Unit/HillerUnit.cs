@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Core
 {
-    public class MainUnit : MonoBehaviour, ISelectable, IAttackable, IUnit, IDamageDealer, IAutomaticAttacker, IHillable
+    public class HillerUnit : MonoBehaviour, ISelectable, IAttackable, IUnit, IHillable
     {
         public float Health => _health;
         public float MaxHealth => _maxHealth;
@@ -14,7 +14,6 @@ namespace Core
         public int Damage => _damage;
         public float VisionRadius => _visionRadius;
 
-        [SerializeField] private Animator _animator;
         [SerializeField] private StopCommandExecutor _stopCommand;
         [SerializeField] private float _maxHealth = 100;
         [SerializeField] private Sprite _icon;
@@ -24,7 +23,7 @@ namespace Core
         private float _health = 100;
 
         public Transform Transform => transform;
-
+        
         public void ReceiveDamage(int amount)
         {
             if (_health <= 0)
@@ -34,7 +33,6 @@ namespace Core
             _health -= amount;
             if (_health <= 0)
             {
-                _animator.SetTrigger("PlayDead");
                 Invoke(nameof(Destroy), 1f);
             }
         }
@@ -47,7 +45,7 @@ namespace Core
 
         public void Hill(int amount)
         {
-            Debug.Log("MainUnit_Hill");
+            Debug.Log("HillerUnit_Hill");
         }
     }
 }

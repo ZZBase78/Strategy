@@ -15,7 +15,8 @@ public sealed class MouseInteractionPresenter : MonoBehaviour
     [SerializeField] private Vector3Value _groundClicksRMB;
     [SerializeField] private AttackableValue _attackablesRMB;
     [SerializeField] private Transform _groundTransform;
-    
+    [SerializeField] private HillableValue _hillableValue;
+
     private Plane _groundPlane;
 
     [Inject]
@@ -54,6 +55,10 @@ public sealed class MouseInteractionPresenter : MonoBehaviour
             if (WeHit<IAttackable>(hits, out var attackable))
             {
                 _attackablesRMB.SetValue(attackable);
+            }
+            if (WeHit<IHillable>(hits, out var hillable))
+            {
+                _hillableValue.SetValue(hillable);
             }
             else if (_groundPlane.Raycast(ray, out var enter))
             {

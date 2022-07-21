@@ -12,14 +12,24 @@ public sealed class AssetsInstaller : ScriptableObjectInstaller<AssetsInstaller>
     [SerializeField] private Vector3Value _groundClicksRMB;
     [SerializeField] private AttackableValue _attackableClicksRMB;
     [SerializeField] private SelectableValue _selectables;
+    [SerializeField] private HillableValue _hillableValue;
+
+    private AutoMoveRMBData _autoMoveRMBData;
 
     public override void InstallBindings()
     {
         Container.Bind<IAwaitable<IAttackable>>()
             .FromInstance(_attackableClicksRMB);
+        Container.Bind<IAwaitable<IHillable>>()
+            .FromInstance(_hillableValue);
         Container.Bind<IAwaitable<Vector3>>()
             .FromInstance(_groundClicksRMB);
         Container.Bind<IObservable<ISelectable>>().FromInstance(_selectables);
         Container.BindInstances(_legacyContext, _selectables);
+
+        _autoMoveRMBData = new AutoMoveRMBData();
+        _autoMoveRMBData.selectableValue = _selectables;
+        _autoMoveRMBData.vector3Value = _groundClicksRMB;
+        Container.Bind<AutoMoveRMBData>().FromInstance(_autoMoveRMBData);
     }
 }

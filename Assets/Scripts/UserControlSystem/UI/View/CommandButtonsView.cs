@@ -19,6 +19,7 @@ namespace UserControlSystem.UI.View
         [SerializeField] private GameObject _stopButton;
         [SerializeField] private GameObject _produceUnitButton;
         [SerializeField] private GameObject _setRallyButton;
+        [SerializeField] private GameObject _hillButton;
 
         private Dictionary<Type, GameObject> _buttonsByExecutorType;
 
@@ -36,7 +37,11 @@ namespace UserControlSystem.UI.View
             _buttonsByExecutorType
                 .Add(typeof(ICommandExecutor<IProduceUnitCommand>), _produceUnitButton);
             _buttonsByExecutorType
+                .Add(typeof(ICommandExecutor<IProduceHillUnitCommand>), _produceUnitButton);
+            _buttonsByExecutorType
                 .Add(typeof(ICommandExecutor<ISetRallyPointCommand>), _setRallyButton);
+            _buttonsByExecutorType
+                .Add(typeof(ICommandExecutor<IHillCommand>), _hillButton);
         }
         public void BlockInteractions(ICommandExecutor ce)
         {
@@ -55,6 +60,7 @@ namespace UserControlSystem.UI.View
             _stopButton.GetComponent<Selectable>().interactable = value;
             _produceUnitButton.GetComponent<Selectable>().interactable = value;
             _setRallyButton.GetComponent<Selectable>().interactable = value;
+            _hillButton.GetComponent<Selectable>().interactable = value;
         }
 
         public void MakeLayout(IEnumerable<ICommandExecutor> commandExecutors, ICommandsQueue queue)
