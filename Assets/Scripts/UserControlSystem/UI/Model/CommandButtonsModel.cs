@@ -14,11 +14,13 @@ namespace UserControlSystem
         public event Action OnCommandCancel;
 
         [Inject] private CommandCreatorBase<IProduceUnitCommand> _unitProducer;
+        [Inject] private CommandCreatorBase<IProduceHillUnitCommand> _hillUnitProducer;
         [Inject] private CommandCreatorBase<IAttackCommand> _attacker;
         [Inject] private CommandCreatorBase<IStopCommand> _stopper;
         [Inject] private CommandCreatorBase<IMoveCommand> _mover;
         [Inject] private CommandCreatorBase<IPatrolCommand> _patroller;
         [Inject] private CommandCreatorBase<ISetRallyPointCommand> _setRally;
+        [Inject] private CommandCreatorBase<IHillCommand> _hiller;
 
         private bool _commandIsPending;
 
@@ -32,11 +34,13 @@ namespace UserControlSystem
             OnCommandAccepted?.Invoke(commandExecutor);
 
             _unitProducer.ProcessCommandExecutor(commandExecutor, command => ExecuteCommandWrapper(command, commandsQueue));
+            _hillUnitProducer.ProcessCommandExecutor(commandExecutor, command => ExecuteCommandWrapper(command, commandsQueue));
             _attacker.ProcessCommandExecutor(commandExecutor, command => ExecuteCommandWrapper(command, commandsQueue));
             _stopper.ProcessCommandExecutor(commandExecutor, command => ExecuteCommandWrapper(command, commandsQueue));
             _mover.ProcessCommandExecutor(commandExecutor, command => ExecuteCommandWrapper(command, commandsQueue));
             _patroller.ProcessCommandExecutor(commandExecutor, command => ExecuteCommandWrapper(command, commandsQueue));
             _setRally.ProcessCommandExecutor(commandExecutor, command => ExecuteCommandWrapper(command, commandsQueue));
+            _hiller.ProcessCommandExecutor(commandExecutor, command => ExecuteCommandWrapper(command, commandsQueue));
         }
 
         public void ExecuteCommandWrapper(object command, ICommandsQueue commandsQueue)
@@ -64,6 +68,7 @@ namespace UserControlSystem
             _mover.ProcessCancel();
             _patroller.ProcessCancel();
             _setRally.ProcessCancel();
+            _hiller.ProcessCancel();
 
             OnCommandCancel?.Invoke();
         }

@@ -10,19 +10,19 @@ using UserControlSystem;
 using Utils;
 using Zenject;
 
-public class AutoMoveRMB : MonoBehaviour
+public class HillerAutoMoveRMB : MonoBehaviour
 {
     [Inject] private AutoMoveRMBData _autoMoveRMBData;
     [Inject] private CommandCreatorBase<IMoveCommand> _commandCreator;
     private MoveCommandExecutor _commandExecutor;
     private ISelectable _thisUnit;
-    private ChomperCommandsQueue _chomperCommandsQueue;
+    private HillerCommandsQueue _hillerCommandsQueue;
 
     private void Awake()
     {
         _commandExecutor = gameObject.GetComponentInParent<MoveCommandExecutor>();
         _thisUnit = gameObject.GetComponentInParent<ISelectable>();
-        _chomperCommandsQueue = gameObject.GetComponentInParent<ChomperCommandsQueue>();
+        _hillerCommandsQueue = gameObject.GetComponentInParent<HillerCommandsQueue>();
     }
 
     private void Start()
@@ -34,7 +34,7 @@ public class AutoMoveRMB : MonoBehaviour
     {
         if (_autoMoveRMBData.selectableValue.CurrentValue != _thisUnit)
             return;
-        _chomperCommandsQueue.EnqueueCommand(new MoveCommand(vector3));
+        _hillerCommandsQueue.EnqueueCommand(new MoveCommand(vector3));
 
     }
 }
