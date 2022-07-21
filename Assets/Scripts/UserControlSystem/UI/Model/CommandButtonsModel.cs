@@ -2,6 +2,7 @@
 using Abstractions;
 using Abstractions.Commands;
 using Abstractions.Commands.CommandsInterfaces;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -31,6 +32,8 @@ namespace UserControlSystem
                 processOnCancel();
             }
             _commandIsPending = true;
+            MessageBroker.Default.Publish(new CommandPending(_commandIsPending));
+            
             OnCommandAccepted?.Invoke(commandExecutor);
 
             _unitProducer.ProcessCommandExecutor(commandExecutor, command => ExecuteCommandWrapper(command, commandsQueue));
@@ -51,12 +54,14 @@ namespace UserControlSystem
             }
             commandsQueue.EnqueueCommand(command);
             _commandIsPending = false;
+            MessageBroker.Default.Publish(new CommandPending(_commandIsPending));
             OnCommandSent?.Invoke();
         }
 
         public void OnSelectionChanged()
         {
             _commandIsPending = false;
+            MessageBroker.Default.Publish(new CommandPending(_commandIsPending));
             processOnCancel();
         }
 
